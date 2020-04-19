@@ -1,6 +1,8 @@
-{% macro ephemeral_nav_link(what, where, selected=False) -%}
-<li class="ephemeral{% if selected %} selected{% endif %}"><a href="{{ SITEURL }}/{{ where }}">{{what}}</a></li>
-{%- endmacro -%}
+{#
+{% macro ephemeral_nav_link(what, where, selected=False) %}
+    <li class="ephemeral{% if selected %} selected{% endif %}"><a href="{{ SITEURL }}/{{ where }}">{{what}}</a></li>
+{% endmacro ephemeral_nav_link %}
+#}
 
 <!DOCTYPE html>
 <html lang="{{ DEFAULT_LANG }}">
@@ -15,6 +17,7 @@
     {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
     {% endif %}
+    {#
     {% if FEED_ALL_RSS %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />
     {% endif %}
@@ -36,11 +39,16 @@
     {% if TAG_FEED_RSS and tag %}
     <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS.format(slug=tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
     {% endif %}
+    #}
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css" type="text/css" />
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css" type="text/css" />
     <meta name="generator" content="Pelican" />
+    {% if SITEDESCRIPTION %}
     <meta name="description" content="{{ SITEDESCRIPTION }}" />
+    {% endif %}
+    {% if AUTHOR %}
     <meta name="author" content="{{ AUTHOR }}" />
+    {% endif %}
     {% endblock head %}
 </head>
 <body>
@@ -51,19 +59,28 @@
             <ul>
             {% block ephemeral_nav %}{% endblock %}
                 {% if DISPLAY_HOME or DISPLAY_HOME is not defined %}
-                <li{% if output_file == "index.html" %} class="selected"{% endif %}><a href="{{ SITEURL }}/">Home</a></li>
+                {# TODO define output file #}
+                <li{% if output_file and output_file == "index.html" %} class="selected"{% endif %}><a href="{{ SITEURL }}/">Home</a></li>
                 {% endif %}
+
                 {% if DISPLAY_PAGES_ON_MENU %}
                 {% for p in pages %}
                 <li{% if p == page %} class="selected"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
                 {% endfor %}
                 {% endif %}
+
+                {% if MENUITEMS %}
                 {% for title, link in MENUITEMS %}
                 <li><a href="{{ link }}">{{ title }}</a></li>
                 {% endfor %}
+                {% endif %}
+
+                {#
+                TODO - tera doesn't like this loop, says missing elseif/endif is required first???
                 {% for name, link, file in MENU_INTERNAL_PAGES %}
-                <li{% if output_file == file %} class="selected"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ name }}</a></li>
+                <li{% if output_file and output_file == file %} class="selected"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ name }}</a></li>
                 {% endfor %}
+                #}
             </ul>
         </nav>
         {% endif %}
@@ -94,6 +111,8 @@
                 &middot;
                 <a href="{{ SITEURL }}/{{ FEED_ALL_RSS }}" rel="alternate">Rss Feed</a>
                  {% endif %}
+                &middot;
+                <a href="https://twitter.com/davidwilemski" rel="me">Twitter</a>
             </footer>
             {% endif %}
         </div>

@@ -1,14 +1,16 @@
 {# Use PAGINATION_PATTERNS or pagination may break #}
-{% if DEFAULT_PAGINATION and (articles_page.has_previous() or articles_page.has_next()) %}
+{# TODO - determine last page {% if DEFAULT_PAGINATION and (articles_page > 1 or articles_page.has_next()) %} #}
+    {% if DEFAULT_PAGINATION and articles_page > 1 %} #}
 
                 <div class="clear"></div>
                 <div class="pages">
 
-                {% if articles_page.has_previous() %}
+                {% if articles_page > 1 %}
                     <a href="{{ SITEURL }}/{{ articles_previous_page.url }}" class="prev_page">&larr;&nbsp;Previous</a>
                 {% endif %}
 
-                {% if articles_page.has_next() %}
+                {# TODO - determine if page has next #}
+                {% if articles_page %}
                     <a href="{{ SITEURL }}/{{ articles_next_page.url }}" class="next_page">Next&nbsp;&rarr;</a>
                 {% endif %}
 
