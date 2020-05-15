@@ -44,6 +44,20 @@
     {% if AUTHOR %}
     <meta name="author" content="{{ AUTHOR }}" />
     {% endif %}
+    {% if SOCIAL %}
+    {% for social in SOCIAL %}
+    <link href="{{social | safe}}" rel="me" />
+    {% endfor %}
+    {% endif %}
+    {% if MICROPUB_ENDPOINT %}
+    <link href="{{MICROPUB_ENDPOINT | safe}}" rel="micropub" />
+    {% endif %}
+    {% if AUTH_ENDPOINT %}
+    <link href="{{AUTH_ENDPOINT | safe}}" rel="authorization_endpoint" />
+    {% endif %}
+    {% if TOKEN_ENDPOINT %}
+    <link href="{{TOKEN_ENDPOINT | safe}}" rel="token_endpoint" />
+    {% endif %}
     {% endblock head %}
 </head>
 <body>
