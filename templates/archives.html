@@ -13,7 +13,8 @@
             <div class="post archives">
                 <ul>
                 {% for article in month_group %}
-                    <li><a href="{{ SITEURL }}/{{ article.slug }}">{{ article.title }}</a></li>
+                {% set blurb = article.content | truncate(length=30) %}
+                <li><a href="{{ SITEURL }}/{{ article.slug }}">{% if article.title %}{{ article.title }}{% else %}{{ article.date.date | date(format="%b %d") }} @ {{ article.date.time }}: {{ blurb }}{% if blurb | length > 30 %} ...{% endif %}{% endif %}</a></li>
                 {% endfor %}
                 </ul>
             </div>
