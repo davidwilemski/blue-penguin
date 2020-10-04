@@ -79,8 +79,8 @@
                 {% endif %}
 
                 {% if MENUITEMS %}
-                {% for title, link in MENUITEMS %}
-                <li><a href="{{ link }}">{{ title }}</a></li>
+                {% for title_and_link in MENUITEMS %}
+                <li><a href="{{ title_and_link[1] }}">{{ title_and_link[0] }}</a></li>
                 {% endfor %}
                 {% endif %}
 
