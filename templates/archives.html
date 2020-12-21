@@ -8,16 +8,25 @@
     {# based on http://stackoverflow.com/questions/12764291/jinja2-group-by-month-year #}
 
     {% for year, year_group in dates|reverse|group_by(attribute="date.year") %}
-        {% for month, month_group in year_group|reverse|group_by(attribute="date.month") %}
-            <h4 class="date">{{ month_group | slice(end=1) | map(attribute="date") | map(attribute="date") | first | date(format="%b %Y") }}</h4>
-            <div class="post archives">
-                <ul>
-                {% for article in month_group %}
+        {% set_global current_month = 13 %}
+        {% for article in year_group | sort(attribute="date.month") | reverse %}
+            {% if article.date.month < current_month %}
+                {% if current_month == 13 %}
+                    <h4 class="date">{{ article.date.date | date(format="%b %Y") }}</h4>
+                    <div class="post archives">
+                    <ul>
+                {% else %}
+                {# we need to end the previous list and post archives div first #}
+                    </ul>
+                    </div>
+                    <h4 class="date">{{ article.date.date | date(format="%b %Y") }}</h4>
+                    <div class="post archives">
+                    <ul>
+                {% endif %}
+            {% set_global current_month = article.date.month %}
+            {% endif %}
                 {% set blurb = article.content | truncate(length=30) %}
                 <li><a href="{{ SITEURL }}/{{ article.slug }}">{% if article.title %}{{ article.title }}{% else %}{{ article.date.date | date(format="%b %d") }} @ {{ article.date.time }}: {{ blurb }}{% if blurb | length > 30 %} ...{% endif %}{% endif %}</a></li>
-                {% endfor %}
-                </ul>
-            </div>
         {% endfor %}
     {% endfor %}
 {% endblock %}
