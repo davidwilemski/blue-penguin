@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITENAME }} | Archives{% endblock %}
+{% block title %}{{ SITENAME }} | {% if tag %}Tag {% endif %}Archives{% if tag %} - {{tag}}{% endif %}{% endblock %}
 {% block content %}
 
+    {% if tag %}
+    <h1>Tag Archives: <a href="{{ SITEURL }}/tag/{{ tag }}" class="tags selected">{{ tag }}</a></h1>
+    {% else %}
     <h1>Archives</h1>
+    {% endif %}
 
     {# based on http://stackoverflow.com/questions/12764291/jinja2-group-by-month-year #}
 
