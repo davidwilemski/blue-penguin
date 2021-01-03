@@ -11,7 +11,8 @@
 
     {% set_global current_year = 9000 %}
     {% set_global current_month = 13 %}
-    {% for article in dates|reverse %}
+    {# dates is provided in reverse chronological order #}
+    {% for article in dates %}
     {#article: {{ article.date.date }} current vars: {{ current_year }} {{ current_month }}#}
         {% if article.date.year < current_year %}
             {% set_global current_month = 13 %}
