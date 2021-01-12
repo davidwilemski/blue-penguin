@@ -3,7 +3,11 @@
             {% endif %}
 
             <article class="post">
-                {% if article.title %}
+                {% if article.bookmark_of %}
+                <h2 class="title">
+                    <a href="{{ article.bookmark_of }}" class="bookmark-of" rel="nofollow" title="Bookmark of &quot;{{ article.title }}&quot;">🔖 {{ article.title }}</a>
+                </h2>
+                {% elif article.title %}
                 <h2 class="title">
                     <a href="{{ SITEURL }}/{{ article.slug }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">{{ article.title }}</a>
                 </h2>
@@ -18,7 +22,8 @@
                 <div class="clear"></div>
 
                 <div class="info">
-                    <a href="{{ SITEURL }}/{{ article.slug }}">posted at {{ article.published | date(format="%H:%M") }}</a>
+                    {# rel="bookmark" is different from bookmark-of and indicates a permalink to this page. #}
+                    <a href="{{ SITEURL }}/{{ article.slug }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">posted at {{ article.published | date(format="%H:%M") }}</a>
                     {% if article.category and article.category.name != "misc" %}
                     &nbsp;&middot;&nbsp;<a href="{{ SITEURL }}/{{ article.category.url }}" rel="tag">{{ article.category }}</a>
                     {% endif %}

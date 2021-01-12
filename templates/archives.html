@@ -29,7 +29,7 @@
             {% set_global current_month = article.date.month %}
         {% endif %}
                 {% set blurb = article.content | truncate(length=30) %}
-                <li><a href="{{ SITEURL }}/{{ article.slug }}">{% if article.title %}{{ article.title }}{% else %}{{ article.date.date | date(format="%b %d") }} @ {{ article.date.time }}: {{ blurb }}{% if blurb | length > 30 %} ...{% endif %}{% endif %}</a></li>
+                <li><a href="{{ SITEURL }}/{{ article.slug }}">{% if article.bookmark_of %}🔖 {% endif %}{% if article.title %}{{ article.title }}{% else %}{{ article.date.date | date(format="%b %d") }} @ {{ article.date.time }}: {{ blurb }}{% if blurb | length > 30 %} ...{% endif %}{% endif %}</a></li>
         {% if loop.last %}
             </ul>
             </div>
