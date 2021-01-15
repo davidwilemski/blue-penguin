@@ -1,14 +1,12 @@
-            {% if not articles_page or first_article_of_day %}
-            <h4 class="date">{{ article.published | date(format="%b %d, %Y") }}</h4>
-            {% endif %}
-
+          <div class="h-entry">
+            <h4 class="date dt-published"><time datetime="{{ article.published }}">{{ article.published | date(format="%b %d, %Y") }}</time></h4>
             <article class="post">
                 {% if article.bookmark_of %}
-                <h2 class="title">
-                    <a href="{{ article.bookmark_of }}" class="bookmark-of" rel="nofollow" title="Bookmark of &quot;{{ article.title }}&quot;">🔖 {{ article.title }}</a>
+                <h2 class="title p-name">
+                    <a href="{{ article.bookmark_of }}" class="u-bookmark-of" rel="nofollow" title="Bookmark of &quot;{{ article.title }}&quot;">🔖 {{ article.title }}</a>
                 </h2>
                 {% elif article.title %}
-                <h2 class="title">
+                <h2 class="title p-name">
                     <a href="{{ SITEURL }}/{{ article.slug }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">{{ article.title }}</a>
                 </h2>
                 {% endif %}
@@ -18,12 +16,14 @@
 		{% endif %}                
                 
 
+                <div class="e-content">
                 {{ article.content | safe }}
+                </div>
                 <div class="clear"></div>
 
                 <div class="info">
-                    {# rel="bookmark" is different from bookmark-of and indicates a permalink to this page. #}
-                    <a href="{{ SITEURL }}/{{ article.slug }}" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">posted at {{ article.published | date(format="%H:%M") }}</a>
+                    {# rel="bookmark" is different from u-bookmark-of and indicates a permalink to this page. #}
+                    <a href="{{ SITEURL }}/{{ article.slug }}" class="u-url" rel="bookmark" title="Permanent Link to &quot;{{ article.title }}&quot;">posted at {{ article.published | date(format="%H:%M") }}</a>
                     {% if article.category and article.category.name != "misc" %}
                     &nbsp;&middot;&nbsp;<a href="{{ SITEURL }}/{{ article.category.url }}" rel="tag">{{ article.category }}</a>
                     {% endif %}
@@ -40,3 +40,4 @@
 		{% include "disqus.html" %}
 		{% endif %}
             </article>
+          </div>
