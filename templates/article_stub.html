@@ -30,7 +30,7 @@
                     {% if article.tags %}
                     &nbsp;&middot;
                     {% for t in article.tags %}
-                    &nbsp;<a href="{{ SITEURL }}/tag/{{ t }}" class="tags{% if tag and tag.name == t %} selected{% endif %}">{{ t }}</a>
+                    &nbsp;<a href="{{ SITEURL }}/tag/{{ t }}" class="tags{% if tag and tag.name == t %} selected{% endif %} p-category">{{ t }}</a>
                     {% endfor %}
                     {% endif %}
                 </div>
