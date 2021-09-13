@@ -18,6 +18,13 @@
 
                 <div class="e-content">
                 {{ article.content | safe }}
+
+                {% if article.photos %}
+                {% for photo in article.photos %}
+                <img src="{{ photo.url }}" alt="{{ photo.alt }}" />
+                {% endfor %}
+                {% endif %}
+
                 </div>
                 <div class="clear"></div>
 
