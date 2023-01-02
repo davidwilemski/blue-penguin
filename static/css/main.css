@@ -276,6 +276,11 @@ header h2 {
     color: #DDD;
 }
 
+figure figcaption {
+    text-align: center;
+    color: #BBB
+}
+
 #content {
     margin-top: 3em;
 }
